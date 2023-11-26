@@ -8,9 +8,9 @@
 ;;
 
 ; Include forcefield parameters
-#include "forcefield.itp"
-#include "PROA.itp"
-#include "TIP3.itp"
+#include "toppar/forcefield.itp"
+#include "toppar/PROA.itp"
+#include "toppar/TIP3.itp"
 
 [ system ]
 ; Name
