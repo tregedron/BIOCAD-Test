@@ -1,8 +1,21 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import re
 
-l_1, l_2, dG, ddG = np.loadtxt(f"bar_norm.xvg",comments="@",unpack=True)
+file = open('result.txt', 'r').readlines()
+l=[]
+dG=[]
+ddG=[]
+
+for line in file:
+    if re.search('point', line):
+    	result = re.findall(r'\d+\.?\d*', line)
+    	l.append(int(result[0]))
+    	dG.append(float(result[2]))
+    	ddG.append(float(result[3]))
+
+print(l, dG, ddG)
 
 dG_int = np.cumsum(dG)
 
@@ -15,8 +28,8 @@ ax.set_xlabel(r"$\lambda$", fontsize=font_size)
 plt.yticks(fontsize=20)
 plt.xticks(fontsize=20)
 
-ax.errorbar(l_1, dG, ddG, fmt='o', color="black", markersize=0, linewidth=1, capsize=3)
-ax.plot(l_1, dG, "o", color="green", label=r'$\Delta$ G', markersize=5)
+ax.errorbar(l, dG, ddG, fmt='o', color="black", markersize=0, linewidth=1, capsize=3)
+ax.plot(l, dG, "o", color="green", label=r'$\Delta$ G', markersize=5)
 plt.axhline(y=0, xmin=0, xmax=40, color='r', linestyle='--', linewidth=1)
 
 
@@ -32,7 +45,7 @@ ax.set_xlabel(r"$\lambda$", fontsize=font_size)
 plt.yticks(fontsize=20)
 plt.xticks(fontsize=20)
 
-ax.plot(l_1, dG_int, "-", color="red", label=r'$\Delta$G$_{cumsum}$', markersize=5)
+ax.plot(l, dG_int, "-", color="red", label=r'$\Delta$G$_{cumsum}$', markersize=5)
 ax.set_title(r'$\Delta$G$_{sum}$ in BAR method', fontsize=font_size, pad=8)
 plt.legend()
 plt.savefig(f'dG_BAR_sum.png', bbox_inches='tight')
