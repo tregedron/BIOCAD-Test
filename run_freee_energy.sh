@@ -43,4 +43,8 @@ done
 echo "Finished MD, analysing results..."
 gmx bar -f Lambda_*/md*.xvg -o -oi -b 1000 > result.txt
 
+echo "Wait a little doing plots..."
+python TD_int.py
+python plotter_dG.py
+
 exit;
